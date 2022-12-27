@@ -1,19 +1,21 @@
 #ifndef __COMPOSITE2003_H__
 #define __COMPOSITE2003_H__
 
-#include "bit.h"
+#include <stdio.h>
+
 #include <iostream>
 #include <map>
 #include <memory>
 #include <optional>
-#include <stdio.h>
 #include <string>
 #include <tuple>
 #include <type_traits>
 #include <unordered_map>
 #include <vector>
 
-struct BitComposite2003 : public Component { // BASE
+#include "bit.h"
+
+struct BitComposite2003 : public Component {  // BASE
   BitComposite2003() {}
 
   virtual void parse() {
@@ -30,7 +32,8 @@ struct BitComposite2003 : public Component { // BASE
   }
 
   //------------------------------- MAIN BIT OPERATIONS
-  template <class T> T get_bit(int number) {
+  template <class T>
+  T get_bit(int number) {
     auto it = items_map.find(number);
     if (it == items_map.end()) {
       // not exist this field in map
@@ -40,16 +43,15 @@ struct BitComposite2003 : public Component { // BASE
     return items_map[number]->get<T>();
   }
 
-  template <class T> void set_bit(int number, T value) {
+  template <class T>
+  void set_bit(int number, T value) {
     items_map[number]->set<std::string>(value);
   }
 
   //------------------------------- WRAPPER BIT OPERATIONS
   virtual std::string get_pan() { return get_bit<std::string>(BIT::BIT_PAN); }
 
-  virtual void set_pan(const std::string &value) {
-    items_map[BIT::BIT_PAN]->set<std::string>(value);
-  }
+  virtual void set_pan(const std::string &value) { items_map[BIT::BIT_PAN]->set<std::string>(value); }
 
   //------------------------------- COMPONENT FUNCTIONS
   virtual bool IsComposite() const override { return true; }
@@ -58,8 +60,7 @@ struct BitComposite2003 : public Component { // BASE
   //-------------------------------
   //-------------------------------
   template <class T>
-  void register_bit(int bit_number, T value, int min = -1, int max = -1,
-                    int len = -1) {
+  void register_bit(int bit_number, T value, int min = -1, int max = -1, int len = -1) {
     auto p = std::make_unique<BitComponent>();
     p->set<T>(value)->min(min)->max(max)->len(len);
     p->SetParent(this);
@@ -79,13 +80,11 @@ struct BitComposite2003 : public Component { // BASE
     int index = 0;
     std::cout << "bit[1][int]= " << items_map[BIT_1]->get<int>() << "\n";
     std::cout << "bit[2][char] = " << items_map[BIT_2]->get<char>() << "\n";
-    std::cout << "bit[3][std::string] = "
-              << items_map[BIT_3]->get<std::string>() << "\n";
-    std::cout << "bit[4][iscINT2] = " << items_map[BIT_4]->get<iscINT2>()
-              << "\n";
+    std::cout << "bit[3][std::string] = " << items_map[BIT_3]->get<std::string>() << "\n";
+    std::cout << "bit[4][iscINT2] = " << items_map[BIT_4]->get<iscINT2>() << "\n";
   }
 
-protected:
+ protected:
   std::unordered_map<int, std::unique_ptr<BitComponent>> items_map;
 };
-#endif // __COMPOSITE2003_H__
+#endif  // __COMPOSITE2003_H__

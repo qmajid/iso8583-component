@@ -1,16 +1,18 @@
 #ifndef __ISO_H__
 #define __ISO_H__
 
-#include "composite2003.h"
-#include "composite87.h"
+#include <stdio.h>
+
 #include <iostream>
 #include <memory>
-#include <stdio.h>
 #include <string>
 #include <type_traits>
 
+#include "composite2003.h"
+#include "composite87.h"
+
 class Iso {
-public:
+ public:
   Iso() = default;
   virtual ~Iso() = default;
 
@@ -27,7 +29,7 @@ public:
 };
 
 class Iso2003 : public Iso {
-public:
+ public:
   Iso2003() = default;
   ~Iso2003() = default;
 
@@ -43,13 +45,13 @@ public:
     b.print();
   }
 
-protected:
+ protected:
   virtual void convert() { std::cout << "call convert in Iso2003\n"; }
   virtual void check() { std::cout << "call check in Iso2003\n"; }
 };
 
 class Iso87 : public Iso2003 {
-public:
+ public:
   Iso87() = default;
   ~Iso87() = default;
   virtual void do_process() override {
@@ -59,8 +61,8 @@ public:
     b2.print();
   }
 
-protected:
+ protected:
   virtual void convert() { std::cout << "call convert in Iso87\n"; }
   virtual void check() { std::cout << "call check in Iso87\n"; }
 };
-#endif // __ISO_H__
+#endif  // __ISO_H__
