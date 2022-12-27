@@ -18,12 +18,12 @@ class Iso {
 
   // template method
   void start() {
-    do_process();
+    process();
     convert();
     check();
   }
 
-  virtual void do_process() = 0;
+  virtual void process() = 0;
   virtual void convert() = 0;
   virtual void check() = 0;
 };
@@ -33,7 +33,7 @@ class Iso2003 : public Iso {
   Iso2003() = default;
   ~Iso2003() = default;
 
-  virtual void do_process() override {
+  virtual void process() override {
     BitComposite2003 b;
     b.parse();
 
@@ -54,7 +54,7 @@ class Iso87 : public Iso2003 {
  public:
   Iso87() = default;
   ~Iso87() = default;
-  virtual void do_process() override {
+  virtual void process() override {
     BitComposite87 b2;
     b2.parse();
     std::printf("pan2: %s\n", b2.get_pan().data());
