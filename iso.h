@@ -18,9 +18,9 @@ class Iso {
 
   // template method
   void start() {
-    process();
-    convert();
-    check();
+    this->process();
+    this->convert();
+    this->check();
   }
 
   virtual void process() = 0;
